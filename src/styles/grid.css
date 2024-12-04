@@ -1,0 +1,35 @@
+:root {
+    --margin: 30px;
+    --v-spacing: calc((100vw - 2 * var(--margin)) / 10); /* Calculates dynamic width spacing */
+    --h-spacing: calc((100vh - 2 * var(--margin)) / 12); /* Calculates dynamic height spacing */
+  }
+  
+  .grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: var(--margin) repeat(9, 1fr) var(--margin);
+    grid-template-rows: var(--margin) repeat(11, 1fr) var(--margin);
+    pointer-events: none; /* Make sure the grid doesn't interfere with user interaction */
+  }
+  
+  .grid-line {
+    border: 1px solid rgba(164, 37, 29, 0.2); /* Example color for grid lines */
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --margin: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    :root {
+      --margin: 10px;
+    }
+  }
+  
+  

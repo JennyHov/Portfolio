@@ -1,42 +1,15 @@
 /* Global Styles */
 :root {
-    --primary-color: #000000;  /* Black */
-    --accent-color: #757575;   /* Gray */
+    --primary-color: #101010;  /* Black */
+    --accent-color: #A4251D;   /* Gray */
+    --background-color: #F5F3EF;
   }  
 
 body {
-    margin: 0;
+    margin: 30px;
     padding: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: white;
-    color: var(--accent-color);
-  }
-  
-  h1 {
+    font-family: 'Red Hat Display', sans-serif;
+    background-color: var(--background-color);
     color: var(--primary-color);
-    font-weight: 700;
-    font-size: 5rem;
-    letter-spacing: -2px;
-    margin: 0;
-  }
-  
-  p {
-    font-size: 1.25rem;
-    line-height: 1.5;
-  }
-  
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-  }
-
-  a:hover {
-    border-bottom: 2px solid var(--primary-color);
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-
-  
+  } 
   
