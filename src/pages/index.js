@@ -1,11 +1,13 @@
 import React from 'react';
 import LandingPage from '../components/sections/landingpage';
+import Projects from '../components/sections/projects';
+import Experience from '../components/sections/experience';
 import GlobalStyle from '../styles/globalstyle';
 import GridOverlay from "../components/gridOverlay";
 
 const App = () => (
   <>
-   {/* Vertical grid lines */}
+  {/*
    <GridOverlay
         lines={10} // Total number of lines
         orientation="vertical"
@@ -16,7 +18,6 @@ const App = () => (
         customPositions={[28]} // Fixed positions for the first two lines
       />
 
-      {/* Horizontal grid lines */}
       <GridOverlay
         lines={10} // Total number of horizontal lines
         orientation="horizontal"
@@ -26,8 +27,11 @@ const App = () => (
         pattern={[97, 45]} // Pattern for alternating lines (105px, then 52px)
         customPositions={[28, 763]} // Custom horizontal lines at 150px, 400px, and 600px
       />
+    */}
     <GlobalStyle />
     <LandingPage />
+    <Projects />
+    <Experience />
   </>
 );
 

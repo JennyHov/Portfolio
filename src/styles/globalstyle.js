@@ -4,8 +4,7 @@ const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&display=swap');
 
   /* Reset styles */
-  * {
-    box-sizing: border-box;
+  * { 
     font-family: 'Red Hat Display', sans-serif;
   }
 

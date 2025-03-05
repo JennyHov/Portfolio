@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Wrapper from "../wrapper";
-import GridOverlay from "../gridOverlay"; // Import the GridOverlay component
+import GridOverlay from "../gridOverlay";
 
-// Styles for the upper-left text
 const UpperLeftText = styled.div`
   position: absolute;
   display: flex;
@@ -18,14 +17,12 @@ const SmallText = styled.div`
   line-height: ${(props) => props.lineHeight || "27px"};
 `;
 
-// Wrapper for both horizontal and vertical letters
 const LetterWrapper = styled.div`
   width: 100%;
-  height: 100%; /* Ensure it takes full height of the wrapper */
+  height: 100%;
   position: relative;
 `;
 
-// Horizontal letter styling with absolute positioning
 const Letter = styled.div`
   position: absolute;
   color: #a4251d;
@@ -33,7 +30,6 @@ const Letter = styled.div`
   font-weight: 700;
   font-family: "Red Hat Display", sans-serif;
 
-  /* Dynamically apply x and y coordinates */
   ${(props) =>
     props.x &&
     props.y &&
@@ -43,10 +39,10 @@ const Letter = styled.div`
 
 const VerticalLetterWrapper = styled.div`
   position: absolute;
-  right: ${(props) => props.rightPosition || "274px"};
+  right: ${(props) => props.rightPosition || "200px"};
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Start from the top */
+  justify-content: flex-start;
   align-items: end;
 `;
 
@@ -54,50 +50,84 @@ const VerticalLetter = styled.div`
   color: #a4251d;
   font-weight: 700;
   font-family: "Red Hat Display", sans-serif;
-  font-size: ${(props) => props.fontSize || "200px"}; /* Dynamically set font size */
-  margin-bottom: -104px; /* Apply spacing between letters */
-  
+  font-size: ${(props) => props.fontSize || "200px"};
+  margin-bottom: -104px;
+
   &:first-child {
-    margin-top: -60px;
+    margin-top: -59px;
   }
 
   &:last-child {
-    margin-bottom: 0; /* Remove spacing after the last letter */
+    margin-bottom: 0;
+  }
+`;
+
+const ToggleButton = styled.button`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #a4251d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 2000; 
+  &:hover {
+    background-color: #861b16;
   }
 `;
 
 const LandingPage = () => {
-  const [isGridVisible, setIsGridVisible] = useState(false); // State to toggle grid visibility
+  const [isGridVisible, setIsGridVisible] = useState(false);
 
-  // Horizontal letters (you already defined their coordinates)
   const letterCoordinates = [
-    { char: "h", x: -11, y: 365 },
-    { char: "o", x: 415, y: 365 },
-    { char: "vl", x: 570, y: 365 },
-    { char: "an", x: 892, y: 365 },
-    { char: "d", x: 1275, y: 365 },
+    { char: "h", x: -11, y: 367 },
+    { char: "o", x: 419, y: 367 },
+    { char: "vl", x: 561, y: 367 },
+    { char: "a", x: 892, y: 367 },
+    { char: "d", x: 1280, y: 367 },
   ];
 
   const verticalLetters = ["J", "e", "n", "n", "y"];
-  const wrapperHeight = 731; // Wrapper height in pixels
-  const letterSpacing = -50; // Desired spacing between letters
+  const wrapperHeight = 731;
+  const letterSpacing = -50;
   const calculatedFontSize = `${(wrapperHeight - letterSpacing * (verticalLetters.length - 1)) / verticalLetters.length}px`;
 
   return (
     <Wrapper>
-      {/* Render the grid overlay if isGridVisible is true */}
+      {/* Button to toggle the grid */}
+      <ToggleButton onClick={() => setIsGridVisible(!isGridVisible)}>
+        {isGridVisible ? 'Hide Grid' : 'Show Grid'}
+      </ToggleButton>
+
       {isGridVisible && (
-        <GridOverlay
-          lines={10}
-          orientation="vertical"
-          color="rgba(255, 0, 0, 0.5)"
-          start={30}
-          pattern={[240, 46]}
-          thickness="2px"
-        />
+        <>
+          <GridOverlay
+            lines={10}
+            orientation="vertical"
+            color="rgba(16, 16, 16, 1)"
+            thickness="1.5px"
+            start={28}
+            pattern={[240, 46]}
+            customPositions={[28]}
+          />
+
+          <GridOverlay
+            lines={10}
+            orientation="horizontal"
+            color="rgba(16, 16, 16, 1)"
+            thickness="1.5px"
+            start={61}
+            pattern={[97, 45]}
+            customPositions={[28, 763]}
+          />
+        </>
       )}
 
-      {/* Upper-left text group */}
       <UpperLeftText>
         <SmallText size="20px" weight="500">
           Front-End Developer & Digital Designer
@@ -111,30 +141,16 @@ const LandingPage = () => {
         </SmallText>
       </UpperLeftText>
 
-      {/* Wrapper for horizontal letters */}
       <LetterWrapper>
-        {/* Render horizontal letters */}
         {letterCoordinates.map((letter, index) => (
-          <Letter
-            key={index}
-            x={letter.x}
-            y={letter.y}
-            onMouseEnter={() => setIsGridVisible(true)} // Show grid on hover
-            onMouseLeave={() => setIsGridVisible(false)} // Hide grid on hover out
-          >
+          <Letter key={index} x={letter.x} y={letter.y}>
             {letter.char}
           </Letter>
         ))}
 
-        {/* Wrapper for vertical letters */}
-        <VerticalLetterWrapper rightPosition="274px">
+        <VerticalLetterWrapper rightPosition="262.5px">
           {verticalLetters.map((letter, index) => (
-            <VerticalLetter
-              key={index}
-              fontSize={calculatedFontSize}
-              onMouseEnter={() => setIsGridVisible(true)} // Show grid on hover
-              onMouseLeave={() => setIsGridVisible(false)} // Hide grid on hover out
-            >
+            <VerticalLetter key={index} fontSize={calculatedFontSize}>
               {letter}
             </VerticalLetter>
           ))}

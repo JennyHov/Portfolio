@@ -8,12 +8,13 @@ const GridWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   pointer-events: none; /* Allows interaction with elements below */
-  z-index: 1000;
+  z-index: 1000; 
 `;
 
 const Line = styled.div`
   position: absolute;
   background-color: ${({ color }) => color || "rgba(255, 0, 0, 0.5)"};
+  pointer-events: none; /* Ensures child elements don't block interactions */
   ${({ orientation, position, thickness }) =>
     orientation === "vertical"
       ? `width: ${thickness || '1px'}; height: 100%; left: ${position}px;`
@@ -26,18 +27,17 @@ const GridOverlay = ({
   color,
   start,
   pattern,
-  customPositions, // Now using only customPositions
+  customPositions, 
   thickness = '2px',
 }) => {
   // Generate lines based on pattern and custom positions
   const generateLines = () => {
-    const positions = [start]; // Start with the first line at the start position
+    const positions = [start]; 
     let currentPosition = start;
 
-    // Apply alternating pattern for the remaining lines
     let patternIndex = 0;
-    for (let i = 1; i < lines; i++) { // Start at 1 since the first line is already added
-      currentPosition += pattern[patternIndex % pattern.length]; // Alternate using the pattern
+    for (let i = 1; i < lines; i++) { 
+      currentPosition += pattern[patternIndex % pattern.length];
       positions.push(currentPosition);
       patternIndex++;
     }
@@ -45,12 +45,11 @@ const GridOverlay = ({
     return positions;
   };
 
-  // If custom horizontal lines are provided, merge them with generated positions
   const linePositions = generateLines();
 
   if (customPositions && customPositions.length > 0 && orientation === "horizontal") {
     customPositions.forEach((position) => {
-      linePositions.push(position); // Adding custom horizontal lines
+      linePositions.push(position); 
     });
   }
 
