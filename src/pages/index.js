@@ -2,6 +2,7 @@ import React from 'react';
 import LandingPage from '../components/sections/landingpage';
 import Projects from '../components/sections/projects';
 import Experience from '../components/sections/experience';
+import About from '../components/sections/about';
 import GlobalStyle from '../styles/globalstyle';
 import GridOverlay from "../components/gridOverlay";
 
@@ -32,6 +33,7 @@ const App = () => (
     <LandingPage />
     <Projects />
     <Experience />
+    <About />
   </>
 );
 
