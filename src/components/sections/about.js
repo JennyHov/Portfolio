@@ -3,6 +3,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
 import { srConfig } from '../../config';
 import sr from '../../utils/sr';
+import Wrapper from '../wrapper';
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 
 const StyledAboutSection = styled.section`
@@ -127,23 +128,24 @@ const About = () => {
   const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
 
   return (
+    <Wrapper>
     <StyledAboutSection id="about" ref={revealContainer}>
 
       <div className="inner">
         <StyledText>
           <div>
             <p>
-            Born and raised in Asker, Norway 
-            I have a passion for precision and the rhythm of structure - 
-            however, my creativity also thrives in breaking patterns, 
-            and merging unexpected elements into structured spaces. 
+              Born and raised in Asker, Norway 
+              I have a passion for precision and the rhythm of structure - 
+              however, my creativity also thrives in breaking patterns, 
+              and merging unexpected elements into structured spaces. 
 
             </p>
 
             <p>
-            I believe in blending order and rebellion, 
-            crafting digital experiences that are both harmonious and bold — 
-            a reflection of design’s ability to challenge and captivate.
+              I believe in blending order and rebellion, 
+              crafting digital experiences that are both harmonious and bold — 
+              a reflection of design’s ability to challenge and captivate.
             </p>
 
             </div>
@@ -163,6 +165,7 @@ const About = () => {
         </StyledPic>
       </div>
     </StyledAboutSection>
+    </Wrapper>
   );
 };
 
