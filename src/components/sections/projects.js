@@ -53,14 +53,16 @@ const Projects = () => {
         {/* Number */}
         <div className="column number">{number}</div>
   
-        {/* Title */}
-        <div className="title">
-          {title}
+        {/* Title div */}
+        <div className="title-wrapper">            
           {/* Link */}
-          {link && (
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              <IconArrow />
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer" className="title-link">
+              <span className="title-text">{title}</span>
+              <IconArrow className="link-arrow"/>
             </a>
+          ) : (
+            <span className="title-text">{title}</span>
           )}
         </div>
   

@@ -11,18 +11,27 @@ const StyledExperiencesSection = styled.section`
   ${sharedGridStyles}
 `;
 
+const StyledArrow = styled(IconArrow)`
+  width: 16px;
+  height: 17px;
+  transform: rotate(90deg);
+  margin-left: 0.5rem;
+  color: currentColor;
+`;
+
 const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
       allMarkdownRemark(
         filter: { frontmatter: { showInExperience: { eq: true } } }
-        sort: { fields: frontmatter___number, order: ASC }
       ) {
         edges {
           node {
             frontmatter {
-              number
+              date
+              present
               title
+              subtitle
               tech
               github
               external
@@ -38,37 +47,69 @@ const Experience = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const GRID_LIMIT = 6;
-  const experience = data.allMarkdownRemark.edges.filter(({ node }) => node);
-  const firstSix = experience.slice(0, GRID_LIMIT);
-  const projectsToShow = showMore ? experience : firstSix;
+
+  const resume = {
+    frontmatter: {
+      title: 'Resume',
+      present: false,
+      external: '/files/Resume_Jenny_Hovland.pdf',
+      tech: [],
+    },
+    html: '',
+  };
+
+  // Sort descending by numeric date (fallback to 0 if no date)
+  const experience = data.allMarkdownRemark.edges
+    .map(({ node }) => node)
+    .sort((a, b) => {
+      const dateA = Number(a.frontmatter.date) || 0;
+      const dateB = Number(b.frontmatter.date) || 0;
+      return dateB - dateA; // descending order
+    });
+
+  const experienceWithResume = [resume, ...experience];
+
+  const firstSix = experienceWithResume.slice(0, GRID_LIMIT);
+  const projectsToShow = showMore ? experienceWithResume : firstSix;
 
   const renderProject = (node) => {
     const { frontmatter, html } = node;
-    const { number, title, tech, github, external } = frontmatter;
-  
-    const link = external || github; // Decide which link to display
-  
+    const { date, present, title, subtitle, tech, github, external } = frontmatter;
+    const displayDate = (
+      <span className="date-wrapper">
+        {date}
+        {present && <StyledArrow aria-label="to present" />}
+      </span>
+    );
+
+    const link = external || github;
+
     return (
       <div className="row">
-        {/* Number */}
-        <div className="column number">{number}</div>
-  
-        {/* Title */}
-        <div className="title">{title}
+        {/* Date */}
+        <div className="column date">{displayDate}</div>
+
+        {/* Title div */}
+        <div className="title-wrapper">            
           {/* Link */}
-          {link && (
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              <IconArrow /> 
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer" className="title-link">
+              <span className="title-text">{title}</span>
+              <IconArrow className="link-arrow"/>
             </a>
+          ) : (
+            <span className="title-text">{title}</span>
           )}
+
+          {subtitle && <div className="subtitle">{subtitle}</div>}
         </div>
-  
+
         {/* Description */}
         <div
           className="column description"
           dangerouslySetInnerHTML={{ __html: html }}
         />
-  
+
         {/* Technologies */}
         <div className="column tech">
           {tech && tech.map((item, i) => <div key={i}>{item}</div>)}
@@ -76,21 +117,18 @@ const Experience = () => {
       </div>
     );
   };
-  
 
   return (
     <Wrapper>
       <StyledExperiencesSection>
         <ul className="grid">
           {prefersReducedMotion ? (
-            <>
-              {projectsToShow.map(({ node }, i) => (
-                <li key={i}>{renderProject(node)}</li>
-              ))}
-            </>
+            projectsToShow.map((node, i) => (
+              <li key={i}>{renderProject(node)}</li>
+            ))
           ) : (
             <TransitionGroup component={null}>
-              {projectsToShow.map(({ node }, i) => (
+              {projectsToShow.map((node, i) => (
                 <CSSTransition
                   key={i}
                   classNames="fadeup"
